@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    {% for message in messages %}
+      <p>{{message}}</p>
+    {% endfor %}
+
+    <a href="/logout">Logout</a>
+    <h1>Welcome, {{ request.session.users_name }}!</h1>
+
+    <h3>Here are your appointments for today</h3>
+    <table>
+      <tr>
+        <th>Tasks</th>
+        <th>Time</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    {% for task in appts %}
+      <tr>
+        <td>{{ task.task}}</td>
+        <td>{{ task.time }}</td>
+        <td>{{ task.status }}</td>
+        <td><a href="/appointments/{{ task.id }}">Edit</a> <a href="/delete/{{ task.id }}">Delete</a></td>
+      </tr>
+    {% endfor %}
+    </table>
+
+    <h3>Your Other Appointments</h3>
+    <table>
+      <tr>
+        <th>Tasks</th>
+        <th>Date</th>
+        <th>Time</th>
+      </tr>
+    {% for task in appts %}
+      <tr>
+        <td>{{ task.task}}</td>
+        <td>{{ task.date }}</td>
+        <td>{{ task.time }}</td>
+      </tr>
+    {% endfor %}
+    </table>
+
+    <h3>Add Appointment</h3>
+    <form action="/add_task" method="post">
+      {% csrf_token %}
+      <label for="date">
+        Travel Date To:
+        <input type="date" name="date">
+      </label>
+      <label for="time">
+        Time:
+        <input type="time" name="time">
+      </label>
+      <label for="task">
+        Tasks:
+        <input type="text" name="task">
+      </label>
+      <button>Add</button>
+    </form>
+
+
+  </body>
+</html>

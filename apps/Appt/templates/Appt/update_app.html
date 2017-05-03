@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Update Appointment</title>
+  </head>
+  <body>
+    <a href="/appointments">Dashboard</a>
+    <a href="/logout">Logout</a>
+    {% for task in curr_task %}
+    <form action="/edit/{{ task.id }}" method="post">
+      {% csrf_token %}
+      <label for="task">
+        Tasks:
+        <input type="text" name="task" value="{{ task.task }}">
+      </label>
+      <label for="status">
+          Status:
+          <select name="status" value="{{ task.status }}">
+            <option value="Done">Done</option>
+            <option value="Pending">Pending</option>
+            <option value="Missed">Missed</option>
+          </select>
+        </label>
+      <label for="date">
+        Date:
+        <input type="date" name="date" value="{{ task.date|date:"Y-m-d" }}">
+      </label>
+      <label for="time">
+        Time:
+        <input type="time" name="time" value="{{ task.time|time:"h:i" }}">
+      </label>
+      <button>Update</button>
+      {% endfor %}
+    </form>
+  </body>
+</html>
